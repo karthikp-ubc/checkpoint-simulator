@@ -1,0 +1,65 @@
+# Checkpointing Simulator Configuration
+# ──────────────────────────────────────────────────────────────────────────────
+
+simulation:
+  duration: 50000.0   # total simulated wall-clock time per replicate (hours)
+  n_reps:   15        # independent replicates per (n_nodes, T) data point
+  seed:     null      # integer for reproducibility, null for random
+
+nodes:
+  counts: [1, 4, 16, 64, 256]   # values of n (number of parallel nodes) to sweep
+
+checkpoint:
+  cost: 0.5           # C: time to write a coordinated checkpoint (hours)
+  interval:
+    # mode: 'auto'  => sweep [cost * 1.05 .. max_factor * T_daly_opt] with n_points steps
+    # mode: 'manual' => use the explicit list in 'values'
+    mode:       auto
+    max_factor: 6.0   # upper bound as a multiple of the Daly-optimal interval
+    n_points:   35
+    # values: [0.6, 1.0, 2.0, 5.0, 10.0]   # used only when mode: manual
+
+failure:
+  distribution: exponential   # exponential | weibull | lognormal
+  mtbf: 100.0                 # mean time between failures, per node (hours)
+  # Weibull-only:
+  # shape: 0.7                # k < 1 → decreasing hazard (typical for HPC nodes)
+  # Lognormal-only:
+  # sigma: 0.5
+
+recovery:
+  distribution: exponential
+  mttr: 1.0                   # mean time to recover / repair (hours)
+  # shape: 1.5                # Weibull shape if distribution: weibull
+  # sigma: 0.5                # lognormal sigma if distribution: lognormal
+
+coordination:
+  # Models the overhead of synchronising all n nodes before the checkpoint
+  # write begins (e.g. barrier latency, two-phase commit, message rounds).
+  # This cost is paid once per successful epoch, after work completes and
+  # before the checkpoint data is written.
+  distribution: exponential   # exponential | weibull | lognormal
+  mean: 0.05                  # mean coordination delay (hours)
+  # shape: 1.5                # Weibull shape (k > 1 → barrier dominated by stragglers)
+  # sigma: 0.3                # lognormal sigma
+
+output:
+  plot_file: checkpointing_analysis.png
+
+  # List the metrics you want reported.
+  # Available metrics (all normalised to the simulated time window):
+  #   efficiency              – useful work / total time  (primary figure of merit)
+  #   wasted_work             – work lost to rollbacks (hours)
+  #   recovery_time           – time spent in failure recovery (hours)
+  #   coordination_overhead   – time spent synchronising nodes before each checkpoint
+  #   checkpoint_overhead     – time spent writing checkpoints (hours)
+  #   n_failures              – number of failure epochs
+  #   n_checkpoints           – number of successful checkpoint epochs
+  #   useful_work             – work that survived to completion (hours)
+  #   total_time              – total simulated time (hours)
+  metrics:
+    - efficiency
+    - wasted_work
+    - recovery_time
+    - checkpoint_overhead
+    - n_failures
