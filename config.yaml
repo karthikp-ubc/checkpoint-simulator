@@ -7,7 +7,7 @@ simulation:
   seed:     null      # integer for reproducibility, null for random
 
 nodes:
-  counts: [1, 4, 16, 64, 256]   # values of n (number of parallel nodes) to sweep
+  counts: [1, 16, 64, 256]   # values of n (number of parallel nodes) to sweep
 
 checkpoint:
   cost: 0.5           # C: time to write a coordinated checkpoint (hours)

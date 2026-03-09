@@ -2,6 +2,22 @@
 
 **Total: 10 points**
 
+## Prerequisites
+
+This assignment assumes familiarity with:
+- **Python 3** — running scripts, reading printed output, and writing short
+  snippets to extract numbers (e.g. dividing two values read from sweep output).
+- **YAML** — editing configuration files; syntax is introduced in `README.md`.
+- **Basic probability** — exponential distribution, mean, and the concept of a
+  hazard rate.
+- **SimPy / discrete-event simulation** — not required in depth; the simulator
+  is a black box you configure and run.  Reading the Model section of `README.md`
+  is sufficient background.
+
+---
+
+## Instructions
+
 Use the provided simulator and `config.yaml` to complete the questions below.
 See the [Marking Rubric](#marking-rubric) at the end of this document for
 grading criteria.
@@ -15,7 +31,7 @@ answers should be supported by data from your simulation runs.
 ## Q1 — Scaling study (2 points)
 
 Using the default parameters (MTBF = 100 h, C = 0.5 h, MTTR = 1 h,
-exponential distributions), sweep n ∈ {1, 4, 16, 64, 256} and observe how
+exponential distributions), sweep n ∈ {1, 16, 64, 256} and observe how
 the system behaves as it scales.
 
 **Instructions:**
@@ -29,6 +45,12 @@ the system behaves as it scales.
 - A table with columns: n, simulated T\*, Daly T\*, peak efficiency η, relative error (%).
 - A short paragraph (4–6 sentences) explaining why T\* decreases as n grows,
   using the concept of system MTBF = MTBF_node / n.
+
+> **Note:** For n = 256, Daly's formula yields T\* < C (the checkpoint write
+> cost).  A checkpoint interval shorter than the write cost is physically
+> infeasible, so the simulator clips T to a minimum of C × 1.05.  The large
+> relative error you observe for this case reflects this constraint, not a
+> modelling deficiency — comment on it briefly in your written answer.
 
 ---
 
@@ -62,14 +84,11 @@ with n and is paid even when no failure occurs.
 1. Fix n = 64, MTBF = 100 h, C = 0.5 h, MTTR = 1 h.
 2. Run two separate experiments with `coordination.mean` set to 0.01 and 0.5
    hours.  Keep all other parameters identical.
-3. Use `output.metrics: [efficiency, coordination_overhead, checkpoint_overhead, total_time]`.
-   To obtain overhead as a percentage of total time, divide the overhead value
-   at T\* by `total_time` at T\* (both reported as means in the sweep output).
+3. Use `output.metrics: [efficiency, coordination_overhead, checkpoint_overhead]`.
 
 **Deliverables:**
 - Two plots (or a single figure with two panels, one per μ_D value).
-- A table showing, for each μ_D: peak efficiency, optimal T\*, coordination
-  overhead as a % of total time, checkpoint overhead as a % of total time.
+- A table showing, for each μ_D: peak efficiency and optimal T\*.
 - A written answer to: *Does coordination overhead exceed checkpoint write
   overhead in either experiment?  How does increasing μ_D affect the optimal T\*?*
 
@@ -139,9 +158,9 @@ Each question is worth 2 points, broken down as follows.
 
 | Q | Simulation output | Table | Written answer |
 |---|-------------------|-------|----------------|
-| **Q1** | Efficiency panel shows clear peak for each n; T* readable per curve | n, simulated T*, Daly T*, peak η, relative error all present | Correctly links T* decrease to system MTBF = M/n |
-| **Q2** | Fine-grid efficiency plot with visible error bars | N/A | Correctly characterises flatness of optimum and practical implication |
-| **Q3** | Two plots with coordination and checkpoint overhead panels | μ_D, peak η, T*, coord %, checkpoint % | Correctly identifies which overhead dominates and effect on T* |
+| **Q1** | Efficiency panel shows clear peak for each n; T* readable per curve | n (×4), simulated T*, Daly T*, peak η, relative error all present | Correctly links T* decrease to system MTBF = M/n |
+| **Q2** | Fine-grid efficiency plot with visible error bars | T*, peak η, and efficiency drops at 0.5× and 2× T* reported (in written answer or table) | Correctly characterises flatness of optimum and practical implication |
+| **Q3** | Two plots with coordination and checkpoint overhead panels | μ_D, peak η, T* | Correctly identifies which overhead dominates and effect on T* |
 | **Q4** | Two Weibull plots compared against exponential baseline | Distribution, k, peak η, T*, mean failures/replicate at T* | Correctly contrasts k < 1 vs k > 1 behaviour with intuitive explanation |
 | **Q5** | Sweep plot centred near Daly T*; all three MTTR curves shown | MTTR, peak η, T*, recovery %, wasted work % | Direction of T* shift stated correctly; budget term identified correctly |
 
