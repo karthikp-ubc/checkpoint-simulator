@@ -3,6 +3,9 @@
 **Total: 10 points**
 
 Use the provided simulator and `config.yaml` to complete the questions below.
+See the [Marking Rubric](#marking-rubric) at the end of this document for
+grading criteria.
+
 For each question, create a dedicated YAML config file (e.g. `q1.yaml`), run
 the simulator, and include the resulting plot(s) in your report.  All written
 answers should be supported by data from your simulation runs.
@@ -115,3 +118,33 @@ on efficiency interacts non-linearly with the failure rate.
 - A written answer to: *Does increasing MTTR shift T\* to the left or right?
   At MTTR = 5 h, which term in the time budget is largest — wasted work or
   recovery time — and why?*
+
+---
+
+## Marking Rubric
+
+Each question is worth 2 points, broken down as follows.
+
+### Per-question breakdown (applies to Q1–Q5)
+
+| Component | Full marks | Partial marks | No marks |
+|-----------|-----------|---------------|----------|
+| **Simulation output** (0.5 pts) | Correct config used; plot is present and legible | Plot present but config has minor errors | Plot missing or parameters wrong |
+| **Table / numerical results** (0.75 pts) | All values correct and clearly labelled | Minor errors or missing column | Table absent or values unreasonable |
+| **Written answer** (0.75 pts) | Explanation is accurate, concise, and grounded in simulation data | Partially correct or lacks supporting evidence | Missing, or contradicts the data |
+
+### Question-specific expectations
+
+| Q | Simulation output | Table | Written answer |
+|---|-------------------|-------|----------------|
+| **Q1** | Efficiency panel shows clear peak for each n; T* readable per curve | n, simulated T*, Daly T*, relative error all present | Correctly links T* decrease to system MTBF = M/n |
+| **Q2** | Fine-grid efficiency plot with visible error bars | N/A | Correctly characterises flatness of optimum and practical implication |
+| **Q3** | Two plots with coordination and checkpoint overhead panels | μ_D, peak η, T*, coord %, checkpoint % | Correctly identifies which overhead dominates and effect on T* |
+| **Q4** | Two Weibull plots compared against exponential baseline | Distribution, k, peak η, T*, n_failures | Correctly contrasts k < 1 vs k > 1 behaviour with intuitive explanation |
+| **Q5** | Sweep plot centred near Daly T*; all four metrics shown | MTTR, peak η, T*, recovery % | Direction of T* shift stated correctly; budget term identified correctly |
+
+### General deductions
+
+- **−0.25 pts** per question if the YAML config file is not submitted.
+- **−0.25 pts** per question if written answers exceed one paragraph without adding substance.
+- Plots that are present but unreadable (no axis labels, too small) are treated as partially correct.
