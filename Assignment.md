@@ -129,8 +129,10 @@ on efficiency interacts non-linearly with the failure rate.
 1. Fix n = 16, MTBF = 100 h, C = 0.5 h, μ_D = 0.05 h, exponential
    distributions.
 2. Run three experiments with `recovery.mttr` set to 0.5, 1.0, and 5.0 hours.
-3. Use `output.metrics: [efficiency, recovery_time, wasted_work]` and set
-   `n_reps: 10`.
+3. Use `output.metrics: [efficiency, recovery_time, wasted_work, total_time]`
+   and set `n_reps: 10`.  To obtain recovery time and wasted work as a
+   percentage of total time, divide each metric's mean value at T\* by
+   `total_time_mean` at T\*.
 
 **Deliverables:**
 - Efficiency vs T plots for all three MTTR values (overlay or side-by-side).
