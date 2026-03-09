@@ -195,3 +195,16 @@ Each question is worth 2 points, broken down as follows.
 - **−0.25 pts** per question if the YAML config file is not submitted.
 - **−0.25 pts** per question if written answers exceed one paragraph without adding substance.
 - Plots that are present but unreadable (no axis labels, too small) are treated as partially correct.
+
+---
+
+## Submission
+
+Submit the following **two attachments** as a post to Piazza:
+
+1. **Written report (PDF)** — one document containing all plots, tables, and
+   written answers for Q1–Q5 (and the bonus, if attempted), in order.
+2. **Code archive (.zip)** — a zip file containing all YAML config files and
+   any Python scripts used to run experiments or extract results.  The zip
+   should unpack into a single directory and include one YAML file per
+   experiment run.
