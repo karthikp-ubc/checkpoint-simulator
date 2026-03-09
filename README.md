@@ -1,4 +1,5 @@
-# Coordinated Checkpointing Simulator
+# Simulator for Checkpointing and Recovery
+### CPEN 533 — University of British Columbia
 
 A discrete-event simulator (SimPy) for studying the performance trade-offs of
 coordinated checkpointing in parallel systems.  Designed as a class assignment
@@ -48,12 +49,17 @@ more frequently.
 
 ```
 simulator/
+├── __init__.py          ← package exports (run_once, sweep, daly_optimal_interval, …)
 ├── config.yaml          ← all parameters (edit this to run experiments)
 ├── distributions.py     ← pluggable failure/recovery/coordination distributions
 ├── metrics.py           ← EpochRecord + Metrics (per-epoch and aggregated)
 ├── system.py            ← ParallelSystem + SystemConfig (SimPy coordinator)
 ├── simulator.py         ← parameter sweep, Daly formula, plotting, entry point
-└── test_simulator.py    ← 48 analytical validation tests (pytest)
+├── test_simulator.py    ← 48 analytical validation tests (pytest)
+└── solutions/
+    ├── solution_runner.py      ← programmatic runner for all 5 questions
+    ├── solution-q1.yaml … solution-q5d.yaml   ← per-experiment config files
+    └── solution-q1-plot.png … solution-q5-plot.png
 ```
 
 ---
