@@ -216,9 +216,13 @@ def test_efficiency_matches_theory(n, T):
 
 @pytest.mark.parametrize("n,T", [(1, 10.0), (4, 5.0), (16, 2.0)])
 def test_wasted_fraction_matches_theory(n, T):
-    """wasted_work / total_time ≈ (1−p)·E[X|X<T] / E[epoch]."""
+    """wasted_work / total_time ≈ (1−p)·E[X|X<T] / E[epoch].
+
+    Uses a longer run because wasted work is a small fraction (~5-10 % of
+    time), giving it higher relative variance than efficiency.
+    """
     C, M, MTTR, mu_D = DEFAULTS['C'], DEFAULTS['M'], DEFAULTS['MTTR'], DEFAULTS['mu_D']
-    m = simulate(n, T)
+    m = simulate(n, T, sim_duration=300_000.0)
     sim_frac = m.wasted_work / m.total_time
     expected = theory_wasted_fraction(T, n, M, C, mu_D, MTTR)
     assert abs(sim_frac - expected) / (expected + 1e-9) < RTOL, (
@@ -228,9 +232,12 @@ def test_wasted_fraction_matches_theory(n, T):
 
 @pytest.mark.parametrize("n,T", [(1, 10.0), (4, 5.0), (16, 2.0)])
 def test_recovery_fraction_matches_theory(n, T):
-    """recovery_time / total_time ≈ (1−p)·MTTR / E[epoch]."""
+    """recovery_time / total_time ≈ (1−p)·MTTR / E[epoch].
+
+    Uses a longer run for the same reason as test_wasted_fraction_matches_theory.
+    """
     C, M, MTTR, mu_D = DEFAULTS['C'], DEFAULTS['M'], DEFAULTS['MTTR'], DEFAULTS['mu_D']
-    m = simulate(n, T)
+    m = simulate(n, T, sim_duration=300_000.0)
     sim_frac = m.total_recovery_time / m.total_time
     expected = theory_recovery_fraction(T, n, M, C, mu_D, MTTR)
     assert abs(sim_frac - expected) / (expected + 1e-9) < RTOL, (
@@ -389,16 +396,22 @@ def test_daly_formula_scaling():
 
 def test_daly_formula_sqrt_2CM_limit():
     """
-    When C << M (checkpoint cost  much smaller than MTBF),
-    T* ≈ sqrt(2·C·M),  i.e. T*² / (2·C·M) → 1.
+    When C << M_sys, the C² term in T* = sqrt(2·C·M_sys + C²) − C is
+    negligible and T* ≈ sqrt(2·C·M_sys).  Equivalently T*²/(2·C·M_sys) → 1,
+    with a first-order correction of −T*/M_sys.
+
+    We verify this analytically: T*² / (2·C·M_sys) = 1 − T*/M_sys,
+    and check the formula is self-consistent rather than testing convergence
+    to 1 (which only holds in the limit M_sys → ∞).
     """
     M, C = 10_000.0, 0.5
     for n in [1, 4, 16]:
         T_star = daly_optimal_interval(M, n, C)
         M_sys = M / n
-        ratio = T_star**2 / (2 * C * M_sys)
-        assert abs(ratio - 1.0) < 0.01, (
-            f"n={n}: T*²/(2CM) = {ratio:.4f}, expected ≈ 1"
+        ratio   = T_star ** 2 / (2 * C * M_sys)
+        expected = 1.0 - T_star / M_sys   # exact first-order correction
+        assert abs(ratio - expected) < 1e-9, (
+            f"n={n}: T*²/(2CM) = {ratio:.6f}, expected 1−T*/M = {expected:.6f}"
         )
 
 

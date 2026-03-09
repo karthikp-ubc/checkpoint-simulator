@@ -171,8 +171,18 @@ def daly_optimal_interval(mtbf_node: float, n_nodes: int, C: float) -> float:
 
 
 def efficiency_theory(T: float, n_nodes: int, mtbf_node: float,
-                      C: float, R: float) -> float:
-    """Closed-form efficiency for exponential failures (renewal-reward theorem)."""
+                      C: float, R: float, mean_coordination: float = 0.0) -> float:
+    """Closed-form efficiency for exponential failures (renewal-reward theorem).
+
+    Parameters
+    ----------
+    T                 : checkpoint interval
+    n_nodes           : number of parallel nodes
+    mtbf_node         : per-node MTBF
+    C                 : checkpoint write cost (deterministic)
+    R                 : mean recovery time (MTTR)
+    mean_coordination : mean coordination delay before each checkpoint write
+    """
     lam = n_nodes / mtbf_node
     p_ok   = np.exp(-lam * T)
     p_fail = 1.0 - p_ok
@@ -181,7 +191,7 @@ def efficiency_theory(T: float, n_nodes: int, mtbf_node: float,
     else:
         e_x_given_fail = (1.0 - (1.0 + lam * T) * p_ok) / (lam * p_fail)
     e_useful   = p_ok * T
-    e_duration = p_ok * (T + C) + p_fail * (e_x_given_fail + R)
+    e_duration = p_ok * (T + mean_coordination + C) + p_fail * (e_x_given_fail + R)
     return e_useful / e_duration if e_duration > 0 else 0.0
 
 
@@ -196,11 +206,12 @@ def make_plots(all_results: dict, cfg: dict) -> None:
     """
     import matplotlib.pyplot as plt
 
-    metric_names = cfg['output']['metrics']
-    node_counts  = cfg['nodes']['counts']
-    C     = cfg['checkpoint']['cost']
-    mtbf  = cfg['failure']['mtbf']
-    mttr  = cfg['recovery']['mttr']
+    metric_names   = cfg['output']['metrics']
+    node_counts    = cfg['nodes']['counts']
+    C              = cfg['checkpoint']['cost']
+    mtbf           = cfg['failure']['mtbf']
+    mttr           = cfg['recovery']['mttr']
+    mean_coord     = cfg['coordination']['mean']
     colors = plt.cm.tab10(np.linspace(0, 0.8, len(node_counts)))
 
     n_metrics = len(metric_names)
@@ -224,7 +235,7 @@ def make_plots(all_results: dict, cfg: dict) -> None:
 
             # Overlay theoretical efficiency curve only for the efficiency panel
             if metric == 'efficiency' and cfg['failure']['distribution'] == 'exponential':
-                th = [efficiency_theory(T, n, mtbf, C, mttr) for T in T_vals]
+                th = [efficiency_theory(T, n, mtbf, C, mttr, mean_coord) for T in T_vals]
                 ax.plot(T_vals, th, '--', color=color, alpha=0.55)
 
             ax.axvline(T_opt, color=color, linestyle=':', alpha=0.35)
@@ -239,7 +250,7 @@ def make_plots(all_results: dict, cfg: dict) -> None:
     ax_last  = axes[-1]
     n_range  = np.logspace(0, np.log10(max(node_counts) * 4), 300)
     T_opt_curve  = [daly_optimal_interval(mtbf, n, C) for n in n_range]
-    eff_opt_curve = [efficiency_theory(T_opt_curve[i], n_range[i], mtbf, C, mttr)
+    eff_opt_curve = [efficiency_theory(T_opt_curve[i], n_range[i], mtbf, C, mttr, mean_coord)
                      for i in range(len(n_range))]
 
     ax_r = ax_last.twinx()
