@@ -55,11 +55,7 @@ simulator/
 ├── metrics.py           ← EpochRecord + Metrics (per-epoch and aggregated)
 ├── system.py            ← ParallelSystem + SystemConfig (SimPy coordinator)
 ├── simulator.py         ← parameter sweep, Daly formula, plotting, entry point
-├── test_simulator.py    ← 48 analytical validation tests (pytest)
-└── solutions/
-    ├── solution_runner.py      ← programmatic runner for all 5 questions
-    ├── solution-q1.yaml … solution-q5d.yaml   ← per-experiment config files
-    └── solution-q1-plot.png … solution-q5-plot.png
+└── test_simulator.py    ← 48 analytical validation tests (pytest)
 ```
 
 ---
