@@ -1,6 +1,6 @@
-# Assignment: Checkpointing Trade-offs in Parallel Systems
+# CPEN 533 Assignment 3: Checkpointing Trade-offs in Parallel Systems
 
-**Total: 10 points**
+**Total: 10 points + 1 bonus point**
 
 ## Prerequisites
 
@@ -139,6 +139,30 @@ on efficiency interacts non-linearly with the failure rate.
 - A written answer to: *Does increasing MTTR shift T\* to the left or right?
   At MTTR = 5 h, which term in the time budget is largest — wasted work or
   recovery time — and why?*
+
+---
+
+## Bonus — Deployment budget (1 point)
+
+A research team is planning a parallel job on a cluster with MTBF = 100 h per
+node and checkpoint write cost C = 0.5 h.  They require **at least 60%
+efficiency** and want to maximise the number of nodes deployed.
+
+**Instructions:**
+1. Using your Q1 results as a starting point, identify the boundary between
+   passing and failing the 60% target.  Run additional simulations at
+   intermediate n values (e.g. n = 32) as needed to confirm the maximum n.
+2. Repeat the search with MTBF = 50 h per node (all other parameters unchanged).
+3. Use `output.metrics: [efficiency]` for any new runs.
+
+**Deliverables:**
+- A table of: n, MTBF, peak efficiency η, meets target (yes/no), T\*.
+- A short paragraph (4–6 sentences) stating your recommendation for each MTBF
+  and explaining why halving MTBF changes the maximum deployable n.
+
+**Rubric:** 0.5 pts for the table with correct boundary identification for
+both MTBF values; 0.5 pts for a written answer that correctly explains the
+role of system MTBF = MTBF_node / n.
 
 ---
 
