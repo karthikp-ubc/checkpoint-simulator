@@ -65,7 +65,7 @@ with n and is paid even when no failure occurs.
 3. Use `output.metrics: [efficiency, coordination_overhead, checkpoint_overhead]`.
 
 **Deliverables:**
-- The two plots.
+- Two plots (or a single figure with two panels, one per μ_D value).
 - A table showing, for each μ_D: peak efficiency, optimal T\*, coordination
   overhead as a % of total time, checkpoint overhead as a % of total time.
 - A written answer to: *Does coordination overhead exceed checkpoint write
@@ -88,7 +88,8 @@ dominate) or k > 1 (increasing hazard — wear-out).
 4. Use the n = 16 curve from your Q1 exponential run as the baseline for comparison.
 
 **Deliverables:**
-- The two plots alongside the Q1 exponential baseline (n = 16).
+- Plots for both Weibull cases alongside the Q1 exponential baseline (n = 16);
+  these may be presented as separate figures or combined into one multi-panel figure.
 - A table of: distribution, shape k, peak efficiency, optimal T\*, total
   failures observed.
 - A written answer to: *How does the shape parameter affect optimal T\* and
@@ -114,7 +115,7 @@ on efficiency interacts non-linearly with the failure rate.
 **Deliverables:**
 - Efficiency vs T plots for all four MTTR values (overlay or side-by-side).
 - A table of: MTTR, peak efficiency, optimal T\*, recovery time as a % of
-  total simulated time.
+  total simulated time, wasted work as a % of total simulated time.
 - A written answer to: *Does increasing MTTR shift T\* to the left or right?
   At MTTR = 5 h, which term in the time budget is largest — wasted work or
   recovery time — and why?*
@@ -141,7 +142,7 @@ Each question is worth 2 points, broken down as follows.
 | **Q2** | Fine-grid efficiency plot with visible error bars | N/A | Correctly characterises flatness of optimum and practical implication |
 | **Q3** | Two plots with coordination and checkpoint overhead panels | μ_D, peak η, T*, coord %, checkpoint % | Correctly identifies which overhead dominates and effect on T* |
 | **Q4** | Two Weibull plots compared against exponential baseline | Distribution, k, peak η, T*, n_failures | Correctly contrasts k < 1 vs k > 1 behaviour with intuitive explanation |
-| **Q5** | Sweep plot centred near Daly T*; all four metrics shown | MTTR, peak η, T*, recovery % | Direction of T* shift stated correctly; budget term identified correctly |
+| **Q5** | Sweep plot centred near Daly T*; all four metrics shown | MTTR, peak η, T*, recovery %, wasted work % | Direction of T* shift stated correctly; budget term identified correctly |
 
 ### General deductions
 
