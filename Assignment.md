@@ -2,6 +2,22 @@
 
 **Total: 10 points + 1 bonus point**
 
+## Goal
+
+Checkpointing is the primary fault-tolerance mechanism for long-running
+parallel jobs, but it introduces overheads that compete directly with useful
+computation.  The goal of this assignment is to develop an empirical and
+intuitive understanding of these trade-offs through simulation.
+
+You will use a provided discrete-event simulator to study how the optimal
+checkpoint interval T\* changes as you vary system scale (number of nodes),
+coordination cost, failure distribution shape, and recovery time.  For each
+experiment you will compare simulation results against analytical predictions
+from Daly's formula, and write short answers explaining the trends you observe.
+By the end of the assignment you should be able to reason quantitatively about
+checkpointing performance and make informed deployment decisions under realistic
+system constraints.
+
 ## Prerequisites
 
 This assignment assumes familiarity with:
