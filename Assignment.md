@@ -38,7 +38,7 @@ the system behaves as it scales.
 1. Run the simulator with `output.metrics: [efficiency, wasted_work, checkpoint_overhead]`.
 2. From the efficiency panel, read off the approximate optimal interval T\* for each value of n.
 3. Compare the T\* values you read from the plot against the Daly formula:
-   T\* = √(2 · C · M/n + C²) − C.
+   T\* = √(2 · C · M/n + C²) − C,  where M = MTBF_node.
 
 **Deliverables:**
 - The plot produced by the simulator.
