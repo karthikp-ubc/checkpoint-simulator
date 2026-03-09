@@ -1,3 +1,4 @@
+# Simulator for Checkpointing and Recovery: CPEN 533 (University of British Columbia)
 """
 Pluggable failure/recovery time distributions.
 
