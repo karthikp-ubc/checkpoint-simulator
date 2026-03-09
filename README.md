@@ -240,22 +240,4 @@ conditional on failing before the checkpoint.
 | `test_daly_formula_sqrt_2CM_limit` | exact identity T*²/(2CM_sys) = 1 − T*/M_sys |
 | `test_daly_optimal_near_simulated_peak` | T* achieves within 5 % of simulated peak η, for n ∈ {1, 4, 16, 64} |
 
----
 
-## Suggested experiments
-
-1. **Scaling study** — with the default config, observe how the optimal T and
-   peak efficiency change as n increases from 1 to 256.
-
-2. **Coordination overhead** — set `coordination.mean` to 0.01, 0.1, and 0.5
-   hours.  At what point does coordination cost dominate checkpoint write cost?
-
-3. **Distribution shape** — switch `failure.distribution` to `weibull` with
-   `shape: 0.7` (decreasing hazard, typical of HPC systems).  How does the
-   optimal T change vs. exponential?
-
-4. **Recovery asymmetry** — double the MTTR to 2.0 hours.  Which term in the
-   time budget grows most?  Does the optimal T shift?
-
-5. **Manual sweep** — set `checkpoint.interval.mode: manual` and provide a
-   fine grid near the predicted T* to measure the sharpness of the optimum.

@@ -61,5 +61,6 @@ output:
     - efficiency
     - wasted_work
     - recovery_time
+    - coordination_overhead
     - checkpoint_overhead
     - n_failures
