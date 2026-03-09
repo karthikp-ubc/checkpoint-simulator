@@ -119,8 +119,8 @@ The figure contains one panel per requested metric plus a final summary panel:
 
 ```yaml
 simulation:
-  duration: 50000.0   # simulated hours per replicate
-  n_reps:   15        # replicates per (n, T) point — controls error bars
+  duration: 20000.0   # simulated hours per replicate
+  n_reps:   8         # replicates per (n, T) point — controls error bars
   seed:     null      # integer for reproducibility; null = random
 
 nodes:

@@ -26,7 +26,7 @@ the system behaves as it scales.
 
 **Deliverables:**
 - The plot produced by the simulator.
-- A table with columns: n, simulated T\*, Daly T\*, relative error (%).
+- A table with columns: n, simulated T\*, Daly T\*, peak efficiency η, relative error (%).
 - A short paragraph (4–6 sentences) explaining why T\* decreases as n grows,
   using the concept of system MTBF = MTBF_node / n.
 
@@ -62,7 +62,9 @@ with n and is paid even when no failure occurs.
 1. Fix n = 64, MTBF = 100 h, C = 0.5 h, MTTR = 1 h.
 2. Run two separate experiments with `coordination.mean` set to 0.01 and 0.5
    hours.  Keep all other parameters identical.
-3. Use `output.metrics: [efficiency, coordination_overhead, checkpoint_overhead]`.
+3. Use `output.metrics: [efficiency, coordination_overhead, checkpoint_overhead, total_time]`.
+   To obtain overhead as a percentage of total time, divide the overhead value
+   at T\* by `total_time` at T\* (both reported as means in the sweep output).
 
 **Deliverables:**
 - Two plots (or a single figure with two panels, one per μ_D value).
@@ -90,8 +92,8 @@ dominate) or k > 1 (increasing hazard — wear-out).
 **Deliverables:**
 - Plots for both Weibull cases alongside the Q1 exponential baseline (n = 16);
   these may be presented as separate figures or combined into one multi-panel figure.
-- A table of: distribution, shape k, peak efficiency, optimal T\*, total
-  failures observed.
+- A table of: distribution, shape k, peak efficiency, optimal T\*, mean
+  failures per replicate at T\* (from the `n_failures` metric at the optimal T\*).
 - A written answer to: *How does the shape parameter affect optimal T\* and
   peak efficiency compared to the exponential baseline?  Give an intuitive
   explanation for the difference between k = 0.5 and k = 2.0.*
@@ -107,13 +109,12 @@ on efficiency interacts non-linearly with the failure rate.
 **Instructions:**
 1. Fix n = 16, MTBF = 100 h, C = 0.5 h, μ_D = 0.05 h, exponential
    distributions.
-2. Run four experiments with `recovery.mttr` set to 0.5, 1.0, 2.0, and 5.0
-   hours.
+2. Run three experiments with `recovery.mttr` set to 0.5, 1.0, and 5.0 hours.
 3. Use `output.metrics: [efficiency, recovery_time, wasted_work]` and set
    `n_reps: 10`.
 
 **Deliverables:**
-- Efficiency vs T plots for all four MTTR values (overlay or side-by-side).
+- Efficiency vs T plots for all three MTTR values (overlay or side-by-side).
 - A table of: MTTR, peak efficiency, optimal T\*, recovery time as a % of
   total simulated time, wasted work as a % of total simulated time.
 - A written answer to: *Does increasing MTTR shift T\* to the left or right?
@@ -138,11 +139,11 @@ Each question is worth 2 points, broken down as follows.
 
 | Q | Simulation output | Table | Written answer |
 |---|-------------------|-------|----------------|
-| **Q1** | Efficiency panel shows clear peak for each n; T* readable per curve | n, simulated T*, Daly T*, relative error all present | Correctly links T* decrease to system MTBF = M/n |
+| **Q1** | Efficiency panel shows clear peak for each n; T* readable per curve | n, simulated T*, Daly T*, peak η, relative error all present | Correctly links T* decrease to system MTBF = M/n |
 | **Q2** | Fine-grid efficiency plot with visible error bars | N/A | Correctly characterises flatness of optimum and practical implication |
 | **Q3** | Two plots with coordination and checkpoint overhead panels | μ_D, peak η, T*, coord %, checkpoint % | Correctly identifies which overhead dominates and effect on T* |
-| **Q4** | Two Weibull plots compared against exponential baseline | Distribution, k, peak η, T*, n_failures | Correctly contrasts k < 1 vs k > 1 behaviour with intuitive explanation |
-| **Q5** | Sweep plot centred near Daly T*; all four metrics shown | MTTR, peak η, T*, recovery %, wasted work % | Direction of T* shift stated correctly; budget term identified correctly |
+| **Q4** | Two Weibull plots compared against exponential baseline | Distribution, k, peak η, T*, mean failures/replicate at T* | Correctly contrasts k < 1 vs k > 1 behaviour with intuitive explanation |
+| **Q5** | Sweep plot centred near Daly T*; all three MTTR curves shown | MTTR, peak η, T*, recovery %, wasted work % | Direction of T* shift stated correctly; budget term identified correctly |
 
 ### General deductions
 
