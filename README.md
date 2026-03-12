@@ -120,7 +120,7 @@ simulation:
   seed:     null      # integer for reproducibility; null = random
 
 nodes:
-  counts: [1, 4, 16, 64, 256]   # values of n to sweep
+  counts: [1, 16, 64, 256]      # values of n to sweep
 
 checkpoint:
   cost: 0.5                     # C (hours)
