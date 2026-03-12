@@ -18,6 +18,10 @@ By the end of the assignment you should be able to reason quantitatively about
 checkpointing performance and make informed deployment decisions under realistic
 system constraints.
 
+Before starting, work through `Tutorial.md` — it covers installation, running
+the simulator, reading the plots, and extracting numerical results, and will
+save you significant time on every question.
+
 ## Prerequisites
 
 This assignment assumes familiarity with:
