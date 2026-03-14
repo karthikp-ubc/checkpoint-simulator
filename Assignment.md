@@ -143,7 +143,8 @@ dominate) or k > 1 (increasing hazard — wear-out).
 
 Recovery time (MTTR) is dead time that neither computes nor checkpoints.
 Unlike the checkpoint cost C, it is only paid after a failure, so its impact
-on efficiency interacts non-linearly with the failure rate.
+on efficiency interacts non-linearly with the failure rate - and as you saw 
+in the Young-Daly derivation, R does not appear in the formula for optimal T*.
 
 **Instructions:**
 1. Fix n = 16, MTBF = 100 h, C = 0.5 h, μ_D = 0.05 h, exponential
