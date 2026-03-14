@@ -201,7 +201,7 @@ results = sweep(
 
 # Find the T with highest mean efficiency
 best = max(results, key=lambda r: r['efficiency_mean'])
-print(f"Simulated T* = {best['T']:.2f} h")
+print(f"Simulated T* = {best['checkpoint_interval']:.2f} h")
 print(f"Peak η       = {best['efficiency_mean']:.4f}")
 
 # Compute recovery time as % of total time at T*

@@ -102,7 +102,7 @@ checkpoint write begins (e.g. a barrier or two-phase commit).  This cost grows
 with n and is paid even when no failure occurs.
 
 **Instructions:**
-1. Fix n = 64, MTBF = 100 h, C = 0.5 h, MTTR = 1 h.
+1. Fix n = 64, MTBF = 100 h, C = 0.5 h, MTTR = 1 h, μ_D = 0.05 h.
 2. Run two separate experiments with `coordination.mean` set to 0.01 and 0.5
    hours.  Keep all other parameters identical.
 3. Use `output.metrics: [efficiency, coordination_overhead, checkpoint_overhead]`.
@@ -144,7 +144,7 @@ dominate) or k > 1 (increasing hazard — wear-out).
 
 Recovery time (MTTR) is dead time that neither computes nor checkpoints.
 Unlike the checkpoint cost C, it is only paid after a failure, so its impact
-on efficiency interacts non-linearly with the failure rate - and as you saw 
+on efficiency interacts non-linearly with the failure rate — and as you saw
 in the Young-Daly derivation, R does not appear in the formula for optimal T*.
 
 **Instructions:**
