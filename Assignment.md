@@ -1,4 +1,5 @@
-# CPEN 533 Assignment 3: Checkpointing Trade-offs in Parallel Systems
+# CPEN 533 - University of British Columbia
+# Assignment 3: Checkpointing Trade-offs in Parallel Systems
 
 **Total: 10 points + 1 bonus point**
 
