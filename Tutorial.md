@@ -185,15 +185,18 @@ import numpy as np
 T_values = np.linspace(0.2 * T_opt, 4 * T_opt, 30).tolist()
 
 results = sweep(
-    n_nodes            = n,
-    checkpoint_interval_list = T_values,
-    checkpoint_cost    = C,
-    mtbf               = MTBF,
-    mttr               = 1.0,
-    mean_coordination  = 0.05,
-    sim_duration       = 20000.0,
-    n_reps             = 8,
-    metric_names       = ['efficiency', 'total_time', 'recovery_time'],
+    n_nodes           = n,
+    intervals         = T_values,
+    checkpoint_cost   = C,
+    mtbf              = MTBF,
+    mttr              = 1.0,
+    mean_coordination = 0.05,
+    sim_duration      = 20000.0,
+    n_reps            = 8,
+    failure_dist      = 'exponential',
+    recovery_dist     = 'exponential',
+    coordination_dist = 'exponential',
+    metric_names      = ['efficiency', 'total_time', 'recovery_time'],
 )
 
 # Find the T with highest mean efficiency
